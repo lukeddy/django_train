@@ -10,4 +10,7 @@ urlpatterns = patterns('',
     url(r'^blog/index/$', 'blog.views.index'),
     url(r'^blog/category/$', 'blog.views.category'),
     url(r'^blog/detail/$', 'blog.views.detail'),
+    url(r'^blog/detail3/$', 'blog.views.detail3'),
+    #CRUD
+    url(r'^blog/insert/$', 'blog.views.insert'),
 )
