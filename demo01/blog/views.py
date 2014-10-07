@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template import loader, Context, Template
 from django.shortcuts import render_to_response
 from blog.models import Employee
+from django.conf import settings
 # Create your views here.
 
 
@@ -52,5 +53,8 @@ def insert(req):
 
 
 def list_emps(req):
+    print settings.BASE_DIR
+    print settings.STATIC_ROOT
+    print settings.STATICFILES_DIRS
     emps = Employee.objects.all()
     return render_to_response("list.html",{"emps":emps})
