@@ -49,3 +49,8 @@ def insert(req):
     Employee.objects.create(name='王五')
 
     return HttpResponse("<h1>添加成功！</h1>")
+
+
+def list_emps(req):
+    emps = Employee.objects.all()
+    return render_to_response("list.html",{"emps":emps})

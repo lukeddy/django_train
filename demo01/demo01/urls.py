@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^blog/detail3/$', 'blog.views.detail3'),
     #CRUD
     url(r'^blog/insert/$', 'blog.views.insert'),
+    url(r'^blog/list/$', 'blog.views.list_emps'),
 )
