@@ -2,7 +2,7 @@
 from django.http import HttpResponse
 from django.template import loader, Context, Template
 from django.shortcuts import render_to_response
-from blog.models import Employee
+from blog.models import Employee, Entry, Blog
 from django.conf import settings
 # Create your views here.
 
@@ -58,3 +58,41 @@ def list_emps(req):
     print settings.STATICFILES_DIRS
     emps = Employee.objects.all()
     return render_to_response("list.html",{"emps":emps})
+
+
+#多对一测试
+def test_add(req):
+    entry1 = Entry.objects.create(name="实体1")
+    blog1 = Blog.objects.create(name="博客1", entry=entry1)
+    blog2 = Blog.objects.create(name="博客2", entry=entry1)
+    blog3 = Blog.objects.create(name="博客3", entry=entry1)
+
+    print entry1.blog_set.all()
+    return HttpResponse("<h1>创建成功！</h1>")
+
+
+def test_add2(req):
+    #查询实体
+    entry2 = Entry(id=7)
+    blog1 = Blog.objects.create(name="博客aaa", entry=entry2)
+    blog2 = Blog.objects.create(name="博客bbb", entry=entry2)
+
+    return HttpResponse("<h2>创建成功 2</h2>")
+
+
+def test_add3(req):
+    #查询实体
+    entry1 = Entry.objects.get(name="实体1")
+    blog1 = Blog.objects.create(name="博客mmm", entry=entry1)
+    blog2 = Blog.objects.create(name="博客ppp", entry=entry1)
+
+    return HttpResponse("<h2>创建成功 3</h2>")
+
+
+def test_find(req):
+     #blogs = Blog.objects.all().filter(entry_id=8)
+    blogs = Blog.objects.filter(entry_id=8)
+    print blogs
+    t = Template('<h2>Hello template {{blogs}}</h2>')
+    c = Context({'blogs': blogs})
+    return  HttpResponse(t.render(c))
